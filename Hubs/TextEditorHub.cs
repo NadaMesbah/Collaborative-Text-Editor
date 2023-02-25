@@ -42,6 +42,8 @@ namespace RealTimeCollaborativeApp.Hubs
         {
             Console.WriteLine(range);
             await Clients.OthersInGroup("global").SendAsync("cursorReceive", range,cursor);
+
+            //////////////////////
         }
     }
 }
