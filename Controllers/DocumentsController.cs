@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using RealTimeCollaborativeApp.Models;
 
 namespace RealTimeCollaborativeApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/[controller]")]
     [ApiController]
     public class DocumentsController : ControllerBase
     {
@@ -23,6 +24,7 @@ namespace RealTimeCollaborativeApp.Controllers
 
         // GET: api/Documents
         [HttpGet]
+        [Route("/[controller]/GetDocuments")]
         public async Task<ActionResult<IEnumerable<Document>>> GetDocuments()
         {
           if (_context.Documents == null)
@@ -31,9 +33,25 @@ namespace RealTimeCollaborativeApp.Controllers
           }
             return await _context.Documents.ToListAsync();
         }
-
+        // GET: api/DocumentUser
+        [HttpGet]
+        [Route("/[controller]/GetDocumentUser")]
+        public async Task<ActionResult<Object>> GetDocumentUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var users = await _context.Set<IdentityUser>().ToListAsync();
+            var users = await _context.Users.ToListAsync();
+            if (users == null)
+            {
+                return NotFound();
+            }
+            //we only want the users who are not the logged in ones
+            //{ u.Id, u.Username} those are the only fields we want
+            return users.Where(u => u.Id != userId).Select(u => new { u.Id, u.UserName }).ToList();
+        }
         // GET: api/Documents/5
         [HttpGet("{id}")]
+        [Route("/[controller]/GetDocument/{id}")]
         public async Task<ActionResult<Document>> GetDocument(int id)
         {
           if (_context.Documents == null)
@@ -53,6 +71,7 @@ namespace RealTimeCollaborativeApp.Controllers
         // PUT: api/Documents/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Route("/[controller]/UpdateDocument/{id}")]
         public async Task<IActionResult> PutDocument(int id, Document document)
         {
             if (id != document.Id)
@@ -84,6 +103,7 @@ namespace RealTimeCollaborativeApp.Controllers
         // POST: api/Documents
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Route("/[controller]/CreateDocument")]
         public async Task<ActionResult<Document>> PostDocument(Document document)
         {
           if (_context.Documents == null)
@@ -98,6 +118,7 @@ namespace RealTimeCollaborativeApp.Controllers
 
         // DELETE: api/Documents/5
         [HttpDelete("{id}")]
+        [Route("/[controller]/DeleteDocument/{id}")]
         public async Task<IActionResult> DeleteDocument(int id)
         {
             if (_context.Documents == null)

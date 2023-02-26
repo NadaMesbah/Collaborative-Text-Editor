@@ -12,7 +12,7 @@ using RealTimeCollaborativeApp.Data;
 namespace RealTimeCollaborativeApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230225175911_AddDocumentToDb")]
+    [Migration("20230226000102_AddDocumentToDb")]
     partial class AddDocumentToDb
     {
         /// <inheritdoc />
@@ -236,6 +236,10 @@ namespace RealTimeCollaborativeApp.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

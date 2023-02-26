@@ -1,0 +1,39 @@
+﻿@model RealTimeCollaborativeApp.Models.ViewModel.DocumentVM
+
+<input type="hidden" id="hdUserId" value="@Model.UserId" />
+
+<div class="container border m-3 p-4">
+    <div class="row">
+        <div class="col-3">Create Document</div>
+        <div class="col-4"><input type="text" class="form-control" id="createDocName" /></div>
+        <div class="col-3">
+            <input type="button" class="btn btn-primary" onclick="@($"addnewDocument({Model.MaxDocsAllowed})")" id="btnCreateDoc" value="Create Document" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">Select Document</div>
+        <div class="col-4">
+            <select class="form-select" id="ddlSelDoc"></select>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-3">Delete Document</div>
+        <div class="col-4">
+            <select class="form-select" id="ddlDelDoc"></select>
+        </div>
+        <div class="col-3">
+            <input type="button" class="btn btn-danger" onclick="deleteDocument();" id="btnDeleteDoc" value="Delete Document" />
+        </div>
+    </div>
+</div>
+<div class="container border m-3 p-4 bg-light">
+    <div class="row" style="min-height:200px">
+        <div class="col-12">
+            Message List:
+            <ul id="messagesList"></ul>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/signalr.js"></script>
+<script src="~/js/create.js"></script>
