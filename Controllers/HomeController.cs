@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RealTimeCollaborativeApp.Data;
 using RealTimeCollaborativeApp.Models;
@@ -29,6 +30,7 @@ namespace RealTimeCollaborativeApp.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             //to find the logged in user Id
@@ -40,6 +42,18 @@ namespace RealTimeCollaborativeApp.Controllers
                 UserId= userId,
             };
             return View(documentVM);
+        }
+        [Authorize]
+        public IActionResult TextEditor()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+            DocumentVM documentVM = new()
+            {
+                UserId= userId,
+                UserName= userName,
+            };
+            return View(documentVM) ;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

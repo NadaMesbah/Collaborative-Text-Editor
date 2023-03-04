@@ -9,6 +9,7 @@
         public int MaxDocsAllowed { get; set; }
         public IList<Document> Documents { get; set; }
         public string? UserId { get; set; }
+        public string? UserName { get; set; }
         public bool AllowAddDocument => Documents == null || Documents.Count < MaxDocsAllowed;
     }
 }

@@ -33,6 +33,10 @@ const cursors = quill.getModule('cursors');
 let colors = ['blue', 'red', 'yellow', 'green', 'orange', 'BlueViolet', 'Aqua', 'BurlyWood', 'Coral', 'Crimson']
 let myCursor;
 
+
+let userName = document.getElementById("hdUserName").value;
+let userId = document.getElementById("hdUserId").value;
+
 var connection = new signalR.HubConnectionBuilder()
     .withUrl("/hubs/texteditor")
     .build();
@@ -42,12 +46,14 @@ connection
     .then(res => {
         connection.invoke('JoinGroup', "global");
         console.log(connection.connectionId)
-        myCursor = cursors.createCursor(connection.connectionId, "userX", colors[Math.floor(Math.random() * colors.length)]);
+        myCursor = cursors.createCursor(userId, userName, colors[Math.floor(Math.random() * colors.length)]);
         connection.on('cursorReceive', (range, cursor) => {
             console.log('cursor invoked')
             range = JSON.parse(range)
             cursor = JSON.parse(cursor)
             console.log(cursor)
+            if (cursor.id == userId)
+                return;
             cursors.createCursor(cursor.id, cursor.name, cursor.color);
             cursors.moveCursor(cursor.id, range)
         })
