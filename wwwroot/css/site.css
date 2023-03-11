@@ -18,5 +18,12 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+#documentEditor {
+    height: 80vh;
+    background-color: white;
+    font-size: 1em;
+    color: black;
 }
