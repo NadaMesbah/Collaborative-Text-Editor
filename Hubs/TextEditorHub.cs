@@ -28,7 +28,8 @@ namespace RealTimeCollaborativeApp.Hubs
                 this.Groups.AddToGroupAsync(this.Context.ConnectionId, groupName);
             }
         }
-        public void LeaveGroup(string groupName)
+
+        public override Task OnDisconnectedAsync(Exception? exception)
         {
             var UserId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -46,9 +47,10 @@ namespace RealTimeCollaborativeApp.Hubs
             {
                 var userName = _db.Users.FirstOrDefault(u => u.Id == UserId).UserName;
                 HubConnections.AddUserConnection(UserId, Context.ConnectionId);
-                Clients.OthersInGroup(groupName).SendAsync("newMemberLeft", UserId, userName, groupName);
-                this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, groupName);
+                Clients.Others.SendAsync("newMemberLeft", UserId, userName);
+                this.Groups.RemoveFromGroupAsync(this.Context.ConnectionId, "global");
             }
+            return base.OnDisconnectedAsync(exception);
         }
 
         public async Task SendMessage(string content)

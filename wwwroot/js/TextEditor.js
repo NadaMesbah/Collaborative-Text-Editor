@@ -49,9 +49,10 @@ connection
         connection.on("newMemberJoined", function (userId, userName, groupName) {
             toastr.success(`${userName} has joined the document ${groupName}`);
         });
-        //connection.on("newMemberLeft", function (userId, userName, groupName) {
-        //    toastr.warning(`${userName} has left the document ${groupName}`);
-        //});
+
+        connection.on("newMemberLeft", function (userId, userName) {
+            toastr.info(`${userName} has left the document global`);
+        });
         
         console.log(connection.connectionId)
         myCursor = cursors.createCursor(userId, userName, colors[Math.floor(Math.random() * colors.length)]);
