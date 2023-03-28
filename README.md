@@ -17,8 +17,8 @@ N'oubliez pas que si vous souhaitez accéder à la base de données, vous devez 
 ## Les outils et technologies : 
 Les outils et technologies utilisés pour la création de cette application collaborative en temps réel sont les suivants :
 
-1.  ASP.NET Core
-2. SignalR
-3. Entity Framework Core
+1. ASP.NET Core MVC pour la création de l'application web
+2. SignalR pour la communication en temps réel
+3. Entity Framework Core pour la gestion de base de données
 4. Quill (éditeur de texte riche)
-5. Bootstrap (framework de développement front-end)
+
