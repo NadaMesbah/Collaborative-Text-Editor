@@ -30,7 +30,7 @@ var quill = new Quill("#documentEditor", {
     theme: "snow"
 });
 const cursors = quill.getModule('cursors');
-let colors = ['blue', 'red', 'yellow', 'green', 'orange', 'BlueViolet', 'Aqua', 'BurlyWood', 'Coral', 'Crimson']
+let colors = ['blue', 'red', 'green', 'orange', 'BlueViolet', 'Aqua', 'BurlyWood', 'Coral', 'Crimson']
 let myCursor;
 
 
@@ -44,7 +44,15 @@ var connection = new signalR.HubConnectionBuilder()
 connection
     .start()
     .then(res => {
-        connection.invoke('JoinGroup', "global");
+        connection.invoke('JoinGroup', "global"); //${groupName}
+
+        connection.on("newMemberJoined", function (userId, userName, groupName) {
+            toastr.success(`${userName} has joined the document ${groupName}`);
+        });
+        //connection.on("newMemberLeft", function (userId, userName, groupName) {
+        //    toastr.warning(`${userName} has left the document ${groupName}`);
+        //});
+        
         console.log(connection.connectionId)
         myCursor = cursors.createCursor(userId, userName, colors[Math.floor(Math.random() * colors.length)]);
         connection.on('cursorReceive', (range, cursor) => {

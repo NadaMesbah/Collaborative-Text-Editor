@@ -2,18 +2,6 @@
     .withUrl("/hubs/create")
     .build();
 
-connectionC.on("ReceiveUserConnected", function (userId, userName) {
-
-    addMessage(`${userName} has openned a connection`);
-
-});
-
-connectionC.on("ReceiveUserDisconnected", function (userId, userName) {
-
-    addMessage(`${userName} has closed a connection`);
-
-});
-
 connectionC.on("ReceiveAddDocumentMessage", function (maxRoom, roomId, docName, userId, userName) {
     addMessage(`${userName} has created a document  ${docName}`);
     fillDocumentDropDown();
