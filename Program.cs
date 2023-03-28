@@ -43,6 +43,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.MapHub<TextEditorHub>("/hubs/texteditor");
-app.MapHub<CreateHub>("/hubs/create");
 
 app.Run();
