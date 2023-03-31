@@ -7,8 +7,6 @@ namespace RealTimeCollaborativeApp.Hubs
 {
     public class TextEditorHub : Hub
     {
-        //public static List<string> GroupsJoined { get; set; } = new List<string>();
-
         private readonly ApplicationDbContext _db;
         public TextEditorHub(ApplicationDbContext db)
         {

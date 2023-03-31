@@ -56,6 +56,12 @@ connection
         
         console.log(connection.connectionId)
         myCursor = cursors.createCursor(userId, userName, colors[Math.floor(Math.random() * colors.length)]);
+     
+        quill.on('selection-change', function (range, oldRange, source) {
+            if (source != "user") return
+            connection.invoke('CursorSend', JSON.stringify(range), JSON.stringify(myCursor))
+        });
+
         connection.on('cursorReceive', (range, cursor) => {
             console.log('cursor invoked')
             range = JSON.parse(range)
@@ -66,29 +72,18 @@ connection
             cursors.createCursor(cursor.id, cursor.name, cursor.color);
             cursors.moveCursor(cursor.id, range)
         })
-        quill.on('selection-change', function (range, oldRange, source) {
-            if (source != "user") return
-            connection.invoke('CursorSend', JSON.stringify(range), JSON.stringify(myCursor))
-        });
 
-        // Subscribe to updates from the server
-        connection.on("updateDocument", function (content) {
-            // Update the document content with the received update
-            console.log(content);
-            quill.updateContents(JSON.parse(content));
-
-        });
         // Send updates to the server when the document content changes
         quill.on("text-change", function (delta, oldDelta, source) {
             if (source == "user") {
                 connection.invoke("SendMessage", JSON.stringify(delta));
             }
-
-            //// Extract the content of the Quill editor
-            //var content = quill.root.innerHTML;
-
-            //// Insert the content into the output element
-            //document.getElementById("output").innerHTML = content;
+        });
+        // Subscribe to updates from the server
+        connection.on("updateDocument", function (content) {
+            // Update the document content with the received update
+            console.log(content);
+            quill.updateContents(JSON.parse(content));
         });
     })
     .catch(function (error) {
