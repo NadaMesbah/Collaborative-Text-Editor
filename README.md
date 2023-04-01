@@ -6,7 +6,7 @@
 
 - Pour commencer à utiliser l'application, suivez ces étapes :
 
-      1.  Clonez le référentiel sur votre ordinateur local. 
+      1. Clonez le référentiel sur votre ordinateur local. 
       2. Ouvrez la solution dans Visual Studio.
       3. Construisez et exécutez la solution.
     

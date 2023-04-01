@@ -60,6 +60,7 @@ connection
         quill.on('selection-change', function (range, oldRange, source) {
             if (source != "user") return
             connection.invoke('CursorSend', JSON.stringify(range), JSON.stringify(myCursor))
+            console.log(range);
         });
 
         connection.on('cursorReceive', (range, cursor) => {

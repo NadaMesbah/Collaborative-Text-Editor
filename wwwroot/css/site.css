@@ -1,3 +1,4 @@
+@import url('site.css');
 html {
   font-size: 14px;
 }
@@ -19,6 +20,7 @@ html {
 
 body {
     margin-bottom: 60px;
+    height:100vh;
 }
 
 #documentEditor {
@@ -26,4 +28,42 @@ body {
     background-color: white;
     font-size: 1em;
     color: black;
+    margin-top: 10px;
+}
+
+.docContainer {
+    width: 80%;
+    margin: auto;
+}
+
+.imgcontainer{
+    display: flex;
+    justify-content: center;
+    margin-top:0;
+}
+
+img{
+    height: 400px;
+}
+
+@media print {
+    header{
+        display:none;
+    }
+    body {
+        background: none;
+    }
+
+    .container .ql-editor {
+        width: 9in;
+        height: 9in;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+        align-self: flex-start;
+    }
+
+    .container .ql-toolbar.ql-snow {
+        display: none;
+    }
 }
